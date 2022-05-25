@@ -1,2 +1,2 @@
-# my-plugin-boilerplate
-Modern Plugin Boilerplate
+# My Plugin Boilerplate
+A modern WordPress plugin boilerplate.

@@ -1,0 +1,36 @@
+{
+	"name": "smrafiz/my-plugin-boilerplate",
+	"description": "A modern WordPress plugin boilerplate.",
+	"type": "wordpress-plugin",
+	"keywords": [
+		"wordpress",
+		"plugin",
+		"boilerplate",
+		"framework"
+	],
+	"homepage": "https://github.com/smrafiz/",
+	"license": "GPL",
+	"authors": [
+		{
+			"name": "S.M. Rafiz",
+			"email": "s.m.rafiz@gmail.com"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/smrafiz/my-plugin-boilerplate/issues",
+		"source": "https://github.com/smrafiz/my-plugin-boilerplate"
+	},
+	"autoload": {
+		"psr-4": {
+			"Prefix\\MyPluginBoilerplate\\": "./includes"
+		}
+	},
+	"scripts": {
+		"cs": "phpcs --standard=phpcs.xml.dist .",
+		"cbf": "phpcbf --standard=phpcs.xml.dist ."
+	},
+	"require": {
+		"php": ">=7.1",
+		"htmlburger/carbon-fields": "^3.3"
+	}
+}
