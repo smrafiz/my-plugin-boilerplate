@@ -55,13 +55,14 @@ final class Plugin {
 	 */
 	public function getOwnPluginData() {
 		return [
-			'settings'        => get_option( 'my-plugin-boilerplate-settings' ),
-			'plugin_path'     => \untrailingslashit( \plugin_dir_path( MY_PLUGIN_BOILERPLATE_PLUGIN_ROOT_FILE ) ),
-			'plugin_uri'      => \untrailingslashit( \plugin_dir_url( MY_PLUGIN_BOILERPLATE_PLUGIN_ROOT_FILE ) ),
-			'template_folder' => 'templates',
-			'assets_folder'   => 'assets',
-			'required_php'    => '7.1',
-			'required_wp'     => '5.0',
+			'settings'            => get_option( 'my-plugin-boilerplate-settings' ),
+			'plugin_path'         => \untrailingslashit( \plugin_dir_path( MY_PLUGIN_BOILERPLATE_PLUGIN_ROOT_FILE ) ),
+			'plugin_uri'          => \untrailingslashit( \plugin_dir_url( MY_PLUGIN_BOILERPLATE_PLUGIN_ROOT_FILE ) ),
+			'template_folder'     => 'templates',
+			'ext_template_folder' => 'my-plugin-boilerplate-templates',
+			'assets_folder'       => 'assets',
+			'required_php'        => '7.1',
+			'required_wp'         => '5.0',
 			/**
 			 * Add extra data here
 			 */
@@ -126,6 +127,16 @@ final class Plugin {
 	 */
 	public function templateFolder() {
 		return $this->data()['template_folder'];
+	}
+
+	/**
+	 * Get the plugin external template path
+	 *
+	 * @return string
+	 * @since 1.0.0
+	 */
+	public function extTemplateFolder() {
+		return $this->data()['ext_template_folder'];
 	}
 
 	/**

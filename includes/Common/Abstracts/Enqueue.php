@@ -134,7 +134,9 @@ abstract class Enqueue extends Base {
 	 * @since 1.0.0
 	 */
 	protected function assets() {
-		$this->getStyles()->getScripts();
+		$this
+			->getStyles()
+			->getScripts();
 
 		return $this->enqueues;
 	}
@@ -148,7 +150,7 @@ abstract class Enqueue extends Base {
 	abstract protected function getStyles();
 
 	/**
-	 * Method to accumulate scritps list.
+	 * Method to accumulate scripts list.
 	 *
 	 * @return Enqueue
 	 * @since 1.0.0

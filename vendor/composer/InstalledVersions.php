@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'd98c5e06e503315bc0e238701548f6ad16dfa318',
+    'reference' => '5fe93ae387c0b06cbe644fefd2cc53e927fba7ea',
     'name' => 'smrafiz/my-plugin-boilerplate',
   ),
   'versions' => 
@@ -50,7 +50,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'd98c5e06e503315bc0e238701548f6ad16dfa318',
+      'reference' => '5fe93ae387c0b06cbe644fefd2cc53e927fba7ea',
     ),
   ),
 );

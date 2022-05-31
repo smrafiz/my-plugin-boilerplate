@@ -30,12 +30,12 @@ abstract class Settings extends Base {
 	public $adminPages = [];
 
 	/**
-	 * Admin subpages.
+	 * Admin Sub-Pages.
 	 *
 	 * @var array
 	 * @since 1.0.0
 	 */
-	public $adminSubpages = [];
+	public $adminSubPages = [];
 
 	/**
 	 * Admin settings.
@@ -68,9 +68,11 @@ abstract class Settings extends Base {
 	 * @since 1.0.0
 	 */
 	public function register() {
-		$this->adminPages()->adminSettings();
+		$this
+			->adminPages()
+			->adminSettings();
 
-		if ( ! empty( $this->adminPages ) || ! empty( $this->adminSubpages ) ) {
+		if ( ! empty( $this->adminPages ) || ! empty( $this->adminSubPages ) ) {
 			\add_action( 'admin_menu', [ $this, 'addAdminMenu' ] );
 		}
 
@@ -80,7 +82,7 @@ abstract class Settings extends Base {
 	}
 
 	/**
-	 * Admin Pages & Subpages.
+	 * Admin Pages & Sub-Pages.
 	 *
 	 * @return Settings
 	 * @since 1.0.0
@@ -124,7 +126,7 @@ abstract class Settings extends Base {
 	/**
 	 * Method to add admin sub pages.
 	 *
-	 * @param array $subPages Admin subpages.
+	 * @param array $subPages Admin Sub-Pages.
 	 * @return Settings
 	 * @since 1.0.0
 	 */
@@ -134,7 +136,7 @@ abstract class Settings extends Base {
 		}
 
 		foreach ( $this->adminPages as $page ) {
-			$this->adminSubpages[] = [
+			$this->adminSubPages[] = [
 				'parent_slug' => $page['menu_slug'],
 				'page_title'  => $page['page_title'],
 				'menu_title'  => ( $page['top_menu_title'] ) ? $page['top_menu_title'] : $page['menu_title'],
@@ -144,7 +146,7 @@ abstract class Settings extends Base {
 			];
 		}
 
-		$this->adminSubpages = array_merge( $this->adminSubpages, $subPages );
+		$this->adminSubPages = array_merge( $this->adminSubPages, $subPages );
 
 		return $this;
 	}
@@ -207,7 +209,7 @@ abstract class Settings extends Base {
 			);
 		}
 
-		foreach ( $this->adminSubpages as $page ) {
+		foreach ( $this->adminSubPages as $page ) {
 			\add_submenu_page(
 				$page['parent_slug'],
 				$page['page_title'],

@@ -1,6 +1,6 @@
 <?php
 /**
- * Witgets Class: MediaWidget
+ * Widgets Class: MediaWidget
  *
  * Creates a Media Widget.
  *

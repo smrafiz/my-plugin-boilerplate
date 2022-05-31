@@ -34,6 +34,11 @@ class CarbonFields extends Base {
 	/**
 	 * Registers the class.
 	 *
+	 * This general class is always being instantiated as requested in the
+	 * Bootstrap class
+	 *
+	 * @see Bootstrap::registerServices
+	 *
 	 * @return void
 	 * @since 1.0.0
 	 */

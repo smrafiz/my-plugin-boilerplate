@@ -1,8 +1,8 @@
 <?php
 /**
- * Backend Class: AdminEnqueue
+ * Frontend Class: PublicEnqueue
  *
- * This class enqueues required styles & scripts in the admin pages.
+ * This class enqueues required styles & scripts in the frontend pages.
  *
  * @package Prefix\MyPluginBoilerplate
  * @since   1.0.0
@@ -10,7 +10,7 @@
 
 declare( strict_types = 1 );
 
-namespace Prefix\MyPluginBoilerplate\Controllers\Backend;
+namespace Prefix\MyPluginBoilerplate\Controllers\Frontend;
 
 use Prefix\MyPluginBoilerplate\Common\
 {
@@ -19,12 +19,12 @@ use Prefix\MyPluginBoilerplate\Common\
 };
 
 /**
- * Class: AdminEnqueue
+ * Class: PublicEnqueue
  *
  * @package ThePluginName\App\Backend
  * @since 1.0.0
  */
-class AdminEnqueue extends Enqueue {
+class PublicEnqueue extends Enqueue {
 
 	/**
 	 * Singleton Trait.
@@ -37,10 +37,10 @@ class AdminEnqueue extends Enqueue {
 	/**
 	 * Registers the class.
 	 *
-	 * This backend class is only being instantiated in the backend
+	 * This frontend class is only being instantiated in the frontend
 	 * as requested in the Bootstrap class.
 	 *
-	 * @see Requester::isAdminBackend()
+	 * @see Requester::isFrontend()
 	 * @see Bootstrap::registerServices
 	 *
 	 * @return void
@@ -53,29 +53,25 @@ class AdminEnqueue extends Enqueue {
 			return;
 		}
 
-		\add_action( 'admin_enqueue_scripts', [ $this, 'enqueue' ] );
+		\add_action( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
 	}
 
 	/**
 	 * Method to accumulate styles list.
 	 *
-	 * @return AdminEnqueue
+	 * @return PublicEnqueue
 	 * @since 1.0.0
 	 */
 	protected function getStyles() {
 		$styles = [];
 
 		$styles[] = [
-			'handle' => 'thickbox',
-		];
-
-		$styles[] = [
-			'handle'    => 'my-plugin-boilerplate-admin-styles',
-			'asset_uri' => $this->plugin->assetsUri() . '/css/admin/admin' . $this->plugin->suffix . '.css',
+			'handle'    => 'my-plugin-boilerplate-frontend-styles',
+			'asset_uri' => $this->plugin->assetsUri() . '/css/frontend' . $this->plugin->suffix . '.css',
 			'version'   => $this->plugin->version(),
 		];
 
-		$this->enqueues['style'] = \apply_filters( 'my_plugin_boilerplate_registered_admin_styles', $styles, 10, 1 );
+		$this->enqueues['style'] = \apply_filters( 'my_plugin_boilerplate_registered_frontend_styles', $styles, 10, 1 );
 
 		return $this;
 	}
@@ -83,29 +79,21 @@ class AdminEnqueue extends Enqueue {
 	/**
 	 * Method to accumulate scripts list.
 	 *
-	 * @return AdminEnqueue
+	 * @return PublicEnqueue
 	 * @since 1.0.0
 	 */
 	protected function getScripts() {
 		$scripts = [];
 
 		$scripts[] = [
-			'handle' => 'media-upload',
-		];
-
-		$scripts[] = [
-			'handle' => 'thickbox',
-		];
-
-		$scripts[] = [
-			'handle'     => 'my-plugin-boilerplate-admin-script',
-			'asset_uri'  => $this->plugin->assetsUri() . '/js/admin/admin' . $this->plugin->suffix . '.js',
+			'handle'     => 'my-plugin-boilerplate-frontend-script',
+			'asset_uri'  => $this->plugin->assetsUri() . '/js/frontend' . $this->plugin->suffix . '.js',
 			'dependency' => [ 'jquery' ],
 			'in_footer'  => true,
 			'version'    => $this->plugin->version(),
 		];
 
-		$this->enqueues['script'] = \apply_filters( 'my_plugin_boilerplate_registered_admin_scripts', $scripts, 10, 1 );
+		$this->enqueues['script'] = \apply_filters( 'my_plugin_boilerplate_registered_frontend_scripts', $scripts, 10, 1 );
 
 		return $this;
 	}
@@ -130,11 +118,16 @@ class AdminEnqueue extends Enqueue {
 	 * @since 1.0.0
 	 */
 	private function localizeData() {
+
+		// Send variables to JS.
+		global $wp_query;
+
 		return [
-			'handle' => 'my-plugin-boilerplate-admin-script',
-			'object' => 'my_plugin_boilerplate_admin_object',
+			'handle' => 'my-plugin-boilerplate-frontend-script',
+			'object' => 'my_plugin_boilerplate_frontend_object',
 			'data'   => [
 				'ajaxUrl' => esc_url( admin_url( 'admin-ajax.php' ) ),
+				'wpQueryVars' => $wp_query->query_vars,
 			],
 		];
 	}

@@ -2,12 +2,7 @@
 	"name": "smrafiz/my-plugin-boilerplate",
 	"description": "A modern WordPress plugin boilerplate.",
 	"type": "wordpress-plugin",
-	"keywords": [
-		"wordpress",
-		"plugin",
-		"boilerplate",
-		"framework"
-	],
+	"keywords": [ "wordpress", "plugin", "boilerplate", "framework" ],
 	"homepage": "https://github.com/smrafiz/",
 	"license": "GPL",
 	"authors": [
@@ -31,6 +26,6 @@
 	},
 	"require": {
 		"php": ">=7.1",
-		"htmlburger/carbon-fields": "^3.3"
+		"htmlburger/carbon-fields": "^v3.3.4"
 	}
 }

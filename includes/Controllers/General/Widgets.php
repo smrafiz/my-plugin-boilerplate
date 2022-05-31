@@ -47,7 +47,7 @@ class Widgets extends Base {
 		 * @see Bootstrap::registerServices
 		 *
 		 * Widget is registered from the Integrations folder, but it can
-		 * also be registered rom the integration class file itself.
+		 * also be registered from the integration class file itself.
 		 *
 		 * @see MediaWidget::register()
 		 */
@@ -66,7 +66,7 @@ class Widgets extends Base {
 		];
 
 		foreach ( $widgets as $widget ) {
-			register_widget( $widget );
+			\register_widget( $widget );
 		}
 	}
 }

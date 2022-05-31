@@ -31,7 +31,7 @@ class Setup {
 		}
 
 		// Clear the permalinks.
-		flush_rewrite_rules();
+		\flush_rewrite_rules();
 
 		// Uncomment the following line to see the function in action
 		// exit( var_dump( $_GET ) );
@@ -50,7 +50,7 @@ class Setup {
 		}
 
 		// Clear the permalinks.
-		flush_rewrite_rules();
+		\flush_rewrite_rules();
 
 		// Uncomment the following line to see the function in action
 		// exit( var_dump( $_GET ) );
