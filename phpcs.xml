@@ -51,13 +51,13 @@
 	</rule>
 
 	<!-- Checks for variable prefix for global variables. -->
-	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+	<!-- <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
 				<element value="my_plugin_boilerplate"/>
 			</property>
 		</properties>
-	</rule>
+	</rule> -->
 
 	<!-- Defining Cyclomatic Complexity for more modular approach -->
 	<rule ref="Generic.Metrics.CyclomaticComplexity">

@@ -236,7 +236,8 @@ class CustomPostType {
 		if ( $postTypeName === $post->post_type ) {
 			/* translators: post type name */
 			$new_title = sprintf( esc_html__( 'Enter %s Title', 'my-plugin-text-domain' ), $name );
-			return $new_title;
+
+			return \apply_filters( 'my_plugin_boilerplate_post_type_title', $new_title );
 		}
 
 		return $title;

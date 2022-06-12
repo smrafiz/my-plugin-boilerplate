@@ -12,10 +12,12 @@ declare( strict_types = 1 );
 
 namespace Prefix\MyPluginBoilerplate\Controllers\Backend;
 
+use Prefix\MyPluginBoilerplate\Common\Models\SettingsAPI;
 use Prefix\MyPluginBoilerplate\Controllers\Backend\Callbacks\AdminCallbacks;
+
 use Prefix\MyPluginBoilerplate\Common\
 {
-	Abstracts\Settings,
+	Abstracts\Base,
 	Traits\Singleton
 };
 
@@ -24,7 +26,7 @@ use Prefix\MyPluginBoilerplate\Common\
  *
  * @since 1.0.0
  */
-class Pages extends Settings {
+class Pages extends Base {
 
 	/**
 	 * Singleton trait.
@@ -33,6 +35,30 @@ class Pages extends Settings {
 	 * @since 1.0.0
 	 */
 	use Singleton;
+
+	/**
+	 * Registers the class.
+	 *
+	 * This backend class is only being instantiated in the backend
+	 * as requested in the Bootstrap class.
+	 *
+	 * @see Requester::isAdminBackend()
+	 * @see Bootstrap::registerServices
+	 *
+	 * @return void
+	 * @since 1.0.0
+	 */
+	public function register() {
+		new SettingsAPI(
+			$this->setPages(),
+			$this->setSubPages(),
+			[
+				'settings' => $this->setSettings(),
+				'sections' => $this->setSections(),
+				'fields'   => $this->setFields(),
+			]
+		);
+	}
 
 	/**
 	 * Method to accumulate admin pages list.

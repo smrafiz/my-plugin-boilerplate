@@ -31,6 +31,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+/**
+ * TODO:
+ * 1. Sample Post Meta
+ * 2. Sample CF Post Meta
+ * 3. Create admin views
+ * 4. Page template support
+ * 5. Ajax Controller
+ * 6. Shortcode support
+ * 7. Blocks support
+ * 8. Elementor widget support
+ */
+
 declare( strict_types = 1 );
 
 // If this file is called directly, abort!!!
