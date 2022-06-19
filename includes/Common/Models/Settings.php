@@ -1,6 +1,6 @@
 <?php
 /**
- * Model Class: Settings API
+ * Model Class: Settings
  *
  * This class taps into WordPress Settings API to create admin pages.
  *
@@ -13,11 +13,11 @@ declare( strict_types = 1 );
 namespace Prefix\MyPluginBoilerplate\Common\Models;
 
 /**
- * Model Class: Settings API
+ * Model Class: Settings
  *
  * @since 1.0.0
  */
-class SettingsAPI {
+class Settings {
 
 	/**
 	 * Admin pages.
@@ -62,7 +62,7 @@ class SettingsAPI {
 	/**
 	 * Class Constructor.
 	 *
-	 * Registers an Admin Page.
+	 * Registers Admin Pages & Settings.
 	 *
 	 * @param array $adminPages Admin Pages.
 	 * @param array $adminSubPages Admin Sub-Pages.
@@ -74,7 +74,9 @@ class SettingsAPI {
 	public function __construct( $adminPages, $adminSubPages, $settings = [] ) {
 		$this->settings = $settings;
 
-		// Admin Pages.
+		/**
+		 * Admin Pages.
+		 */
 		$this
 			->addPages( $adminPages )
 			->addSubPages( $adminSubPages );
@@ -83,7 +85,9 @@ class SettingsAPI {
 			\add_action( 'admin_menu', [ $this, 'addAdminMenu' ] );
 		}
 
-		// Admin Settings.
+		/**
+		 * Admin Settings.
+		 */
 		$this
 			->addSettings( $settings['settings'] )
 			->addSections( $settings['sections'] )

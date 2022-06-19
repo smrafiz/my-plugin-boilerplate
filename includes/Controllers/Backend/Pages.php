@@ -12,7 +12,7 @@ declare( strict_types = 1 );
 
 namespace Prefix\MyPluginBoilerplate\Controllers\Backend;
 
-use Prefix\MyPluginBoilerplate\Common\Models\SettingsAPI;
+use Prefix\MyPluginBoilerplate\Common\Models\Settings;
 use Prefix\MyPluginBoilerplate\Controllers\Backend\Callbacks\AdminCallbacks;
 
 use Prefix\MyPluginBoilerplate\Common\
@@ -49,7 +49,7 @@ class Pages extends Base {
 	 * @since 1.0.0
 	 */
 	public function register() {
-		new SettingsAPI(
+		new Settings(
 			$this->setPages(),
 			$this->setSubPages(),
 			[
