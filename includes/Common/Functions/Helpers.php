@@ -153,7 +153,7 @@ class Helpers {
 	 * @return string
 	 * @since  1.0.0
 	 */
-	public static function basicAllowedTags() {
+	public static function allowedTags() {
 		return [
 			'a'          => [
 				'class' => [],
@@ -225,16 +225,62 @@ class Helpers {
 	}
 
 	/**
-	 * WP Kses.
+	 * Sanitize field value
 	 *
-	 * @param string $html HTML to sanitize.
-	 * @return null|string
+	 * @static
+	 *
+	 * @param array $field Meta Fields.
+	 * @param mixed $value Value to sanitize.
+	 *
+	 * @return mixed
+	 * @since  1.0.0
 	 */
-	public static function kses( $html ) {
-		if ( empty( $html ) ) {
+	public static function sanitize( $field = [], $value = null ) {
+		if ( ! is_array( $field ) ) {
 			return;
 		}
 
-		return wp_kses( $html, self::basicAllowedTags() );
+		$sanitizedValue = null;
+
+		$type = ( ! empty( $field['type'] ) ? $field['type'] : 'text' );
+
+		if ( 'number' === $type || 'select' === $type || 'checkbox' === $type || 'radio' === $type ) {
+			$sanitizedValue = sanitize_text_field( $value );
+		} elseif ( 'text' === $type ) {
+			$sanitizedValue = wp_kses( $value, self::allowedTags() );
+		} elseif ( 'url' === $type ) {
+			$sanitizedValue = esc_url( $value );
+		} elseif ( 'textarea' === $type ) {
+			$sanitizedValue = wp_kses_post( $value );
+		} elseif ( 'color' === $type ) {
+			$sanitizedValue = self::sanitizeHexColor( $value );
+		} else {
+			$sanitizedValue = sanitize_text_field( $value );
+		}
+
+		return $sanitizedValue;
+	}
+
+	/**
+	 * Sanitizes Hex Color.
+	 *
+	 * @param string $color Hex Color.
+	 *
+	 * @return string
+	 * @since  1.0.0
+	 */
+	public static function sanitizeHexColor( $color ) {
+		if ( function_exists( 'sanitize_hex_color' ) ) {
+			return sanitize_hex_color( $color );
+		} else {
+			if ( '' === $color ) {
+				return '';
+			}
+
+			// 3 or 6 hex digits, or the empty string.
+			if ( preg_match( '|^#([A-Fa-f0-9]{3}){1,2}$|', $color ) ) {
+				return $color;
+			}
+		}
 	}
 }

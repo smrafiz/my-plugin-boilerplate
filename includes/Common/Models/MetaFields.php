@@ -118,50 +118,41 @@ class MetaFields {
 			return;
 		}
 
-		$fieldsByType    = [];
-		$allFields       = [];
-		$submittedFields = [];
-
 		foreach ( $this->metaBoxes as $key => $metaBox ) {
 			if ( isset( $metaBox['fields'] ) ) {
 				foreach ( $metaBox['fields'] as $fieldId => $field ) {
-					$fieldsByType[ $field['type'] ][] = $fieldId;
+					$this->saveMetaFields( $postID, $fieldId, $field );
 				}
-
-				$current_fields = array_keys( $metaBox['fields'] );
-				$allFields      = array_merge( $allFields, $current_fields );
 			} elseif ( isset( $metaBox['groups'] ) ) {
 				if ( ! empty( $metaBox['groups'] ) ) {
 					foreach ( $metaBox['groups'] as $key => $group ) {
-						$current_fields = array_keys( $group['fields'] );
-						$allFields      = array_merge( $allFields, $current_fields );
-
 						foreach ( $group['fields'] as $fieldId => $field ) {
-							$fieldsByType[ $field['type'] ][] = $fieldId;
+							$this->saveMetaFields( $postID, $fieldId, $field );
 						}
 					}
 				}
 			}
 		}
+	}
 
-		// error_log( print_r( $fieldsByType, true ),3, __DIR__ . "/log.txt") ;
+	/**
+	 * Saves Meta Fields.
+	 *
+	 * @param int    $id Post ID.
+	 * @param string $metaKey Meta Key.
+	 * @param array  $field Meta Field.
+	 *
+	 * @return void
+	 * @since  1.0.0
+	 */
+	public function saveMetaFields( $id, $metaKey, $field ) {
+		$rawValue  = isset( $_REQUEST[ $metaKey ] ) ? wp_unslash( $_REQUEST[ $metaKey ] ) : null;
+		$metaValue = Helpers::sanitize( $field, $rawValue );
 
-		foreach ( $allFields as $fieldData ) {
-			// phpcs:disable
-			$submittedFields[ $fieldData ] = isset( $_REQUEST[ $fieldData ] ) ? Helpers::kses( wp_unslash( $_REQUEST[ $fieldData ] ) ) : null;
-			// phpcs:enable
-		}
-
-		foreach ( $submittedFields as $currentKey => $currentValue ) {
-			update_post_meta( $postID, $currentKey, $currentValue );
-		}
-
-		if ( isset( $fieldsByType['checkbox'] ) ) {
-			foreach ( $fieldsByType['checkbox'] as $key => $checkbox ) {
-				if ( ! in_array( $checkbox, array_keys( $submittedFields ), true ) ) {
-					update_post_meta( $postID, $checkbox, 'no' );
-				}
-			}
+		if ( 'checkbox' === $field['type'] ) {
+			update_post_meta( $id, $metaKey, 'yes' );
+		} else {
+			update_post_meta( $id, $metaKey, $metaValue );
 		}
 	}
 
@@ -178,54 +169,74 @@ class MetaFields {
 		Helpers::createNonce();
 
 		$fields = isset( $metaBox['args']['fields'] ) ? $metaBox['args']['fields'] : [];
+		$groups = isset( $metaBox['args']['groups'] ) ? $metaBox['args']['groups'] : [];
 
 		if ( ! empty( $fields ) ) {
-			?>
-				<div class="widefat my-plugin-boilerplate-fields-wrapper">
-					<div class="my-plugin-boilerplate-field-inner">
-						<?php
-						foreach ( $fields as $metaKey => $field ) {
-							$this->generateMarkup( $post->ID, $metaKey, $field, $metaBox );
-						}
-						?>
-					</div>
-				</div>
-			<?php
+			$this->generateFields( $post->ID, $fields, $metaBox );
 		}
-
-		$groups = isset( $metaBox['args']['groups'] ) ? $metaBox['args']['groups'] : [];
 
 		if ( ! empty( $groups ) ) {
 			foreach ( $groups as $key => $group ) {
-				?>
-				<div class="my-plugin-boilerplate-fields-group-wrapper">
-					<div class="my-plugin-boilerplate-fields-title">
-						<h3><?php echo esc_html( $group['title'] ); ?></h3>
-						<p class="description">
-							<?php
-							echo Helpers::kses( $group['description'] ); // phpcs:ignore: WordPress.Security.EscapeOutput.OutputNotEscaped
-							?>
-						</p>
-					</div>
-
-					<?php
-					if ( ! empty( $group['fields'] ) ) {
-						?>
-						<div class="widefat my-plugin-boilerplate-fields-group">
-							<div>
-								<?php foreach ( $group['fields'] as $metaKey => $field ) { ?>
-									<?php $this->generateMarkup( $post->ID, $metaKey, $field, $metaBox ); ?>
-								<?php } ?>
-							</div>
-						</div>
-						<?php
-					}
-					?>
-				</div>
-				<?php
+				$this->generateGroupFields( $post->ID, $group, $fields, $metaBox );
 			}
 		}
+	}
 
+	/**
+	 * Generate Fields Markup.
+	 *
+	 * @param int   $id Post ID.
+	 * @param array $fields Fields.
+	 * @param array $metaBox Metabox.
+	 *
+	 * @return void
+	 * @since  1.0.0
+	 */
+	private function generateFields( $id, $fields, $metaBox ) {
+		?>
+		<div class="widefat my-plugin-boilerplate-fields-wrapper">
+			<div class="my-plugin-boilerplate-field-inner">
+				<?php
+				foreach ( $fields as $metaKey => $field ) {
+					$this->generateMarkup( $id, $metaKey, $field, $metaBox );
+				}
+				?>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Generate Group Fields Markup.
+	 *
+	 * @param int   $id Post ID.
+	 * @param array $group Group.
+	 * @param array $metaBox Metabox.
+	 *
+	 * @return void
+	 * @since  1.0.0
+	 */
+	private function generateGroupFields( $id, $group, $metaBox ) {
+		?>
+		<div class="my-plugin-boilerplate-fields-group">
+			<div class="my-plugin-boilerplate-group-header">
+				<h3 class="my-plugin-boilerplate-group-title"><?php echo esc_html( $group['title'] ); ?></h3>
+				<p class="my-plugin-boilerplate-group-description">
+					<?php
+					echo wp_kses( $group['description'], Helpers::allowedTags() );
+					?>
+				</p>
+			</div>
+
+			<div class="my-plugin-boilerplate-group-body">
+				<?php
+				if ( ! empty( $group['fields'] ) ) {
+					$this->generateFields( $id, $group['fields'], $metaBox );
+				}
+				?>
+			</div>
+		</div>
+		<?php
 	}
 
 	/**
@@ -285,7 +296,7 @@ class MetaFields {
 	 * @return mixed
 	 * @since  1.0.0
 	 */
-	public function get_meta( $metaKey = '', $postID = null ) {
+	public function getMeta( $metaKey = '', $postID = null ) {
 		if ( empty( $postID ) ) {
 			$postID = get_the_ID();
 		}
@@ -300,26 +311,17 @@ class MetaFields {
 	 * @param string $metaKey Meta Key.
 	 * @param array  $field Field.
 	 * @param array  $metaBox Metabox.
+	 *
 	 * @return void
+	 * @since  1.0.0
 	 */
 	public function generateMarkup( $postID, $metaKey = '', $field = [], $metaBox ) {
-		$duplicateClass   = in_array( $metaKey, $this->duplicateKeys, true ) ? 'my-plugin-boilerplate-field-duplicate' : '';
+		$duplicateClass   = in_array( $metaKey, $this->duplicateKeys, true ) ? ' my-plugin-boilerplate-duplicate-field' : '';
 		$readonly         = in_array( $metaKey, $this->duplicateKeys, true ) ? 'readonly' : '';
 		$duplicateMessage = '';
+
 		if ( in_array( $metaKey, $this->duplicateKeys, true ) ) {
-			?>
-			<div class="notice notice-warning">
-				<?php
-				printf(
-					'<p>%s: <code>%s</code> - <b>%s</b>. <p>%s</p>',
-					esc_html__( 'Duplicate Meta key', 'my-plugin-text-domain' ),
-					esc_html( $metaKey ),
-					esc_html( $metaBox['title'] ),
-					esc_html__( 'Please use unique meta key.', 'my-plugin-text-domain' )
-				);
-				?>
-			</div>
-			<?php
+			$this->generateNotice( $metaKey, $metaBox['title'] );
 		}
 
 		$value = get_post_meta( $postID, $metaKey, true );
@@ -328,32 +330,59 @@ class MetaFields {
 			$value = isset( $field['default'] ) ? $field['default'] : '';
 		}
 
-		switch ( $field['type'] ) {
-			case 'text':
-				?>
-				<div class="my-plugin-boilerplate-fields-row <?php echo esc_attr( $duplicateClass ); ?>">
-					<div class="my-plugin-boilerplate-fields-heading"><?php echo esc_html( $field['title'] ); ?>
-						<?php
-						if ( ! empty( $field['hint'] ) ) {
-							?>
-							<div class="my-plugin-boilerplate-fields-hint">
-								<i class="dashicons dashicons-editor-help" onClick="jQuery(this).siblings('.my-plugin-boilerplate-fields-hint-message').fadeToggle(300);"></i>
-								<p class="my-plugin-boilerplate-fields-hint-message" style="display: none;"><?php echo esc_html( $field ['hint'] ); ?></p>
-							</div>
-							<?php
-						}
-						?>
-					</div>
-					<div class="my-plugin-boilerplate-fields-content">
-						<?php
-						echo Helpers::kses( $duplicateMessage ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-						?>
-						<input type="text" <?php echo esc_attr( $readonly ); ?> name="<?php echo $metaKey; ?>" value="<?php echo Helpers::kses( $value ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" />
-						<p class="description"><?php echo Helpers::kses( $field['description'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
-					</div>
-				</div>
+		?>
+		<div class="my-plugin-boilerplate-fields-row<?php echo esc_attr( $duplicateClass ); ?>">
+			<div class="my-plugin-boilerplate-fields-heading"><?php echo esc_html( $field['title'] ); ?>
 				<?php
-				break;
-		}
+				if ( ! empty( $field['hint'] ) ) {
+					?>
+					<div class="my-plugin-boilerplate-fields-hint">
+						<i class="dashicons dashicons-editor-help" onClick="jQuery(this).siblings('.my-plugin-boilerplate-fields-hint-message').fadeToggle(300);"></i>
+						<p class="my-plugin-boilerplate-fields-hint-message" style="display: none;"><?php echo esc_html( $field ['hint'] ); ?></p>
+					</div>
+					<?php
+				}
+				?>
+			</div>
+			<div class="my-plugin-boilerplate-fields-content">
+				<?php
+				echo wp_kses( $duplicateMessage, Helpers::allowedTags() );
+				switch ( $field['type'] ) {
+					case 'text':
+						?>
+						<input type="text" <?php echo esc_attr( $readonly ); ?> name="<?php echo esc_attr( $metaKey ); ?>" value="<?php echo wp_kses( $value, Helpers::allowedTags() ); ?>" />
+						<p class="description"><?php echo wp_kses( $field['description'], Helpers::allowedTags() ); ?></p>
+						<?php
+						break;
+				}
+				?>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Generates Duplicate Notice.
+	 *
+	 * @param string $key Meta Key.
+	 * @param string $title Meta Title.
+	 *
+	 * @return void
+	 * @since  1.0.0
+	 */
+	private function generateNotice( $key, $title ) {
+		?>
+		<div class="notice notice-warning">
+			<?php
+			printf(
+				'<p>%s: <code>%s</code> - <b>%s</b>. <p>%s</p>',
+				esc_html__( 'Duplicate Meta key', 'my-plugin-text-domain' ),
+				esc_html( $key ),
+				esc_html( $title ),
+				esc_html__( 'Please use unique meta key.', 'my-plugin-text-domain' )
+			);
+			?>
+		</div>
+		<?php
 	}
 }
