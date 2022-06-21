@@ -349,13 +349,61 @@ class MetaFields {
 				echo wp_kses( $duplicateMessage, Helpers::allowedTags() );
 				switch ( $field['type'] ) {
 					case 'text':
-						?>
-						<input type="text" <?php echo esc_attr( $readonly ); ?> name="<?php echo esc_attr( $metaKey ); ?>" value="<?php echo wp_kses( $value, Helpers::allowedTags() ); ?>" />
-						<p class="description"><?php echo wp_kses( $field['description'], Helpers::allowedTags() ); ?></p>
-						<?php
+						echo '<input type="text" ' . esc_attr( $readonly ) . ' name="' . esc_attr( $metaKey ) . '" value="' . wp_kses( $value, Helpers::allowedTags() ) . '" />';
+						break;
+
+					case 'textarea':
+						echo '<textarea name="' . esc_attr( $metaKey ) . '" ' . esc_attr( $readonly ) . '>' . wp_kses_post( $value ) . '</textarea>';
+						break;
+
+					case 'radio':
+						foreach ( $field['choices']  as $choice_value => $choice_title ) {
+							echo '<label>';
+								echo '<input type="radio" ' . esc_attr( $readonly ) . ' name="' . esc_attr( $metaKey ) . '" ' . checked( $value, $choice_value, false ) . ' value="' . esc_html( $choice_value ) . '" />' . esc_html( $choice_title );
+							echo '</label>';
+						}
+						break;
+
+					case 'password':
+						echo '<input type="password" ' . esc_attr( $readonly ) . ' name="' . esc_attr( $metaKey ) . '" value="' . esc_html( $value ) . '" />';
+						break;
+
+					case 'color':
+						echo '<input type="color" ' . esc_attr( $readonly ) . ' name="' . esc_attr( $metaKey ) . '" value="' . esc_html( Helpers::sanitizeHexColor( $value ) ) . '" />';
+						break;
+
+					case 'date':
+						echo '<input type="date" ' . esc_attr( $readonly ) . ' name="' . esc_attr( $metaKey ) . '" value="' . esc_html( $value ) . '" />';
+						break;
+
+					case 'email':
+						echo '<input type="email" ' . esc_attr( $readonly ) . ' name="' . esc_attr( $metaKey ) . '" value="' . esc_html( $value ) . '" />';
+						break;
+
+					case 'number':
+						echo '<input type="number" ' . esc_attr( $readonly ) . ' name="' . esc_attr( $metaKey ) . '" value="' . absint( $value ) . '" />';
+						break;
+
+					case 'url':
+						echo '<input type="url" ' . esc_attr( $readonly ) . ' name="' . esc_attr( $metaKey ) . '" value="' . esc_url_raw( $value ) . '" />';
+						break;
+
+					case 'checkbox':
+						echo '<input type="checkbox" ' . esc_attr( $readonly ) . ' name="' . esc_attr( $metaKey ) . '" ' . checked( $value, 'yes' ) . ' value="yes" />';
+						break;
+
+					case 'select':
+						echo '<select name="' . esc_attr( $metaKey ) . '" ' . esc_attr( $readonly ) . '>';
+
+						foreach ( $field['choices']  as $choice_value => $choice_title ) {
+							echo '<option value="' . esc_html( $choice_value ) . '" ' . selected( $value, $choice_value, false ) . '>' . esc_html( $choice_title ) . '</option>';
+						}
+
+						echo '</select>';
 						break;
 				}
 				?>
+				<p class="description"><?php echo wp_kses( $field['description'], Helpers::allowedTags() ); ?></p>
 			</div>
 		</div>
 		<?php
