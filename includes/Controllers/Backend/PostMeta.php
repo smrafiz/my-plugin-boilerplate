@@ -70,9 +70,9 @@ class PostMeta extends Base {
 	private function galleryMeta() {
 		return [
 			'id'       => 'my-plugin-boilerplate-example-text-field',
-			'title'    => __( 'Text Field', 'my-plugin-text-domain' ),
+			'title'    => __( 'Sample Fields 1', 'my-plugin-text-domain' ),
 			'screen'   => [ 'test_gallery', 'test_testimonial' ],
-			'context'  => 'normal',
+			'context'  => 'advanced',
 			'priority' => 'high',
 			'groups'   => [
 				[
@@ -141,6 +141,18 @@ class PostMeta extends Base {
 							'description' => 'Checkbox field description goes here.',
 							'hint'        => 'Checkbox field description goes here.',
 						],
+						'prefix-2-checkbox' => [
+							'type'        => 'checkbox',
+							'title'       => 'Checkbox',
+							'description' => 'Checkbox field description goes here.',
+							'hint'        => 'Checkbox field description goes here.',
+						],
+						'prefix-3-checkbox' => [
+							'type'        => 'checkbox',
+							'title'       => 'Checkbox',
+							'description' => 'Checkbox field description goes here.',
+							'hint'        => 'Checkbox field description goes here.',
+						],
 						'prefix-1-radio'    => [
 							'type'        => 'radio',
 							'title'       => 'Radio',
@@ -194,9 +206,9 @@ class PostMeta extends Base {
 	private function testimonialMeta() {
 		return [
 			'id'       => 'my-plugin-boilerplate-example-text-field-2',
-			'title'    => __( 'Text Field 2', 'my-plugin-text-domain' ),
+			'title'    => __( 'Sample Fields 2', 'my-plugin-text-domain' ),
 			'screen'   => [ 'test_gallery', 'test_testimonial' ],
-			'context'  => 'normal',
+			'context'  => 'advanced',
 			'priority' => 'high',
 			'fields'   => [
 				'my-plugin-boilerplate-example-text-3' => [

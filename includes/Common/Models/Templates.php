@@ -1,6 +1,6 @@
 <?php
 /**
- * Frontend Class: Templates
+ * Model Class: Templates
  *
  * This class is responsible for loading frontend templates.
  *
@@ -10,13 +10,7 @@
 
 declare( strict_types = 1 );
 
-namespace Prefix\MyPluginBoilerplate\Controllers\Frontend;
-
-use Prefix\MyPluginBoilerplate\Common\
-{
-	Abstracts\Base,
-	Traits\Singleton
-};
+namespace Prefix\MyPluginBoilerplate\Common\Models;
 
 /**
  * Class: Templates
@@ -24,15 +18,7 @@ use Prefix\MyPluginBoilerplate\Common\
  * @package ThePluginName\App\Backend
  * @since 1.0.0
  */
-class Templates extends Base {
-
-	/**
-	 * Singleton Trait.
-	 *
-	 * @see Singleton
-	 * @since 1.0.0
-	 */
-	use Singleton;
+class Templates {
 
 	/**
 	 * Internal use only: Store located template paths.
@@ -40,35 +26,6 @@ class Templates extends Base {
 	 * @var array
 	 */
 	private $path_cache = [];
-
-	/**
-	 * Registers the class.
-	 *
-	 * This frontend class is only being instantiated in the frontend
-	 * as requested in the Bootstrap class.
-	 *
-	 * @see Requester::isFrontend()
-	 * @see Bootstrap::registerServices
-	 *
-	 * @return void
-	 * @since 1.0.0
-	 */
-	public function register() {
-		/**
-		 * Example code using the get template function
-		 * with the use of arguments
-		 */
-		add_action(
-			'wp_footer',
-			function () {
-				$this->get(
-					'test-template',
-					null,
-					[ 'data' => [ 'text' => 'with arguments' ] ]
-				);
-			}
-		);
-	}
 
 	/**
 	 * Retrieve a template part, modified version of:
@@ -203,11 +160,11 @@ class Templates extends Base {
 	 * @since 1.0.0
 	 */
 	protected function getPaths() {
-		$theme_directory = trailingslashit( $this->plugin->extTemplateFolder() );
+		$theme_directory = trailingslashit( my_plugin_boilerplate()->getData()['ext_template_folder'] );
 
 		$file_paths = [
 			10  => trailingslashit( get_template_directory() ) . $theme_directory,
-			100 => $this->plugin->templatePath(),
+			100 => my_plugin_boilerplate()->templatesPath(),
 		];
 
 		// Only add this conditionally, so non-child themes don't redundantly check active theme twice.

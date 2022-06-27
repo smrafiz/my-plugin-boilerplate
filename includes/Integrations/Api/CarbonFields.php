@@ -76,13 +76,43 @@ class CarbonFields extends Base {
 	 * @since 1.0.0
 	 */
 	public function createPages() {
-		$page = Container::make( 'theme_options', __( 'CF Page', 'my-plugin-text-domain' ) );
+		$page = Container::make(
+			'theme_options',
+			__( 'CF Page', 'my-plugin-text-domain' )
+		);
 
 		$page
 			->set_page_parent( 'my_plugin_boilerplate' )
 			->set_page_file( 'cf-page' )
 			->set_classes( 'cf-admin-page' )
 			->add_fields( $this->customFields() );
+
+		$postMeta = Container::make(
+			'post_meta',
+			__( 'CF Custom Fields', 'my-plugin-text-domain' )
+		);
+
+		$postMeta
+			->where( 'post_type', '=', 'test_gallery' )
+			->add_fields(
+				[
+					Field::make(
+						'text',
+						'my_plugin_boilerplate_cf_text',
+						__( 'CF Text Field', 'my-plugin-text-domain' )
+					),
+					Field::make(
+						'rich_text',
+						'my_plugin_boilerplate_cf_rich_text',
+						__( 'CF Rich Text Field', 'my-plugin-text-domain' )
+					),
+					Field::make(
+						'media_gallery',
+						'my_plugin_boilerplate_cf_gallery',
+						__( 'CF Gallery Field', 'my-plugin-text-domain' )
+					),
+				]
+			);
 	}
 
 	/**
@@ -107,37 +137,37 @@ class CarbonFields extends Base {
 			'my_plugin_boilerplate_cf_post_list',
 			''
 		)
-		->set_collapsed( true )
-		->setup_labels(
-			[
-				'plural_name'   => esc_html__( 'New', 'my-plugin-text-domain' ),
-				'singular_name' => esc_html__( 'New', 'my-plugin-text-domain' ),
-			]
-		)
-		->add_fields(
-			[
-				Field::make(
-					'text',
-					'my_plugin_boilerplate_cf_post_title',
-					esc_html__( 'Post Title', 'my-plugin-text-domain' )
-				)
-				->set_help_text( esc_html__( 'Please enter the post title.', 'my-plugin-text-domain' ) ),
+			->set_collapsed( true )
+			->setup_labels(
+				[
+					'plural_name'   => esc_html__( 'New', 'my-plugin-text-domain' ),
+					'singular_name' => esc_html__( 'New', 'my-plugin-text-domain' ),
+				]
+			)
+			->add_fields(
+				[
+					Field::make(
+						'text',
+						'my_plugin_boilerplate_cf_post_title',
+						esc_html__( 'Post Title', 'my-plugin-text-domain' )
+					)
+					->set_help_text( esc_html__( 'Please enter the post title.', 'my-plugin-text-domain' ) ),
 
-				Field::make(
-					'rich_text',
-					'my_plugin_boilerplate_cf_post_content',
-					esc_html__( 'Post Content', 'my-plugin-text-domain' )
-				)
-				->set_help_text( esc_html__( 'Please enter the post content.', 'my-plugin-text-domain' ) ),
-			]
-		)
-		->set_header_template(
+					Field::make(
+						'rich_text',
+						'my_plugin_boilerplate_cf_post_content',
+						esc_html__( 'Post Content', 'my-plugin-text-domain' )
+					)
+					->set_help_text( esc_html__( 'Please enter the post content.', 'my-plugin-text-domain' ) ),
+				]
+			)
+			->set_header_template(
+				'
+				<% if (my_plugin_boilerplate_cf_post_title) { %>
+					Post Title: <%- my_plugin_boilerplate_cf_post_title %>
+				<% } %>
 			'
-			<% if (my_plugin_boilerplate_cf_post_title) { %>
-				Post Title: <%- my_plugin_boilerplate_cf_post_title %>
-			<% } %>
-		'
-		);
+			);
 
 		return $fields;
 	}

@@ -283,4 +283,31 @@ class Helpers {
 			}
 		}
 	}
+
+	/**
+	 * Renders Admin View.
+	 *
+	 * @param string $viewName View name.
+	 * @param array  $args View args.
+	 *
+	 * @return void|string
+	 * @since  1.0.0
+	 */
+	public static function renderView( $viewName, $args = [] ) {
+		$file       = str_replace( '.', '/', $viewName );
+		$file       = ltrim( $file, '/' );
+		$pluginPath = \my_plugin_boilerplate()->getData()['plugin_path'];
+		$viewsPath  = \my_plugin_boilerplate()->getData()['views_folder'];
+		$viewFile   = trailingslashit( $pluginPath . '/' . $viewsPath ) . $file . '.php';
+
+		if ( ! file_exists( $viewFile ) ) {
+			return new \WP_Error(
+				'brock',
+				/* translators: View file name. */
+				sprintf( __( '%s file not found', 'my-plugin-text-domain' ), $viewFile )
+			);
+		}
+
+		load_template( $viewFile, true, $args );
+	}
 }

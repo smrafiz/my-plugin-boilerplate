@@ -83,7 +83,7 @@ class MetaFields {
 		$this->checkDuplicates();
 
 		foreach ( $this->metaBoxes as $key => $metaBox ) {
-			add_meta_box(
+			\add_meta_box(
 				$metaBox['id'],
 				$metaBox['title'],
 				[ $this, 'callback' ],
@@ -150,9 +150,13 @@ class MetaFields {
 		$metaValue = Helpers::sanitize( $field, $rawValue );
 
 		if ( 'checkbox' === $field['type'] ) {
-			update_post_meta( $id, $metaKey, 'yes' );
+			if ( empty( $rawValue ) ) {
+				\update_post_meta( $id, $metaKey, 'no' );
+			} else {
+				\update_post_meta( $id, $metaKey, 'yes' );
+			}
 		} else {
-			update_post_meta( $id, $metaKey, $metaValue );
+			\update_post_meta( $id, $metaKey, $metaValue );
 		}
 	}
 
@@ -389,7 +393,7 @@ class MetaFields {
 						break;
 
 					case 'checkbox':
-						echo '<input type="checkbox" ' . esc_attr( $readonly ) . ' name="' . esc_attr( $metaKey ) . '" ' . checked( $value, 'yes' ) . ' value="yes" />';
+						echo '<input type="checkbox" ' . esc_attr( $readonly ) . ' name="' . esc_attr( $metaKey ) . '" ' . checked( $value, 'yes', false ) . ' value="yes" />';
 						break;
 
 					case 'select':
@@ -402,8 +406,13 @@ class MetaFields {
 						echo '</select>';
 						break;
 				}
+
+				if ( ! empty( $field['description'] ) ) {
+					?>
+					<p class="description"><?php echo wp_kses( $field['description'], Helpers::allowedTags() ); ?></p>
+					<?php
+				}
 				?>
-				<p class="description"><?php echo wp_kses( $field['description'], Helpers::allowedTags() ); ?></p>
 			</div>
 		</div>
 		<?php

@@ -13,7 +13,7 @@ declare( strict_types = 1 );
 namespace Prefix\MyPluginBoilerplate\Controllers\Backend;
 
 use Prefix\MyPluginBoilerplate\Common\Models\Settings;
-use Prefix\MyPluginBoilerplate\Controllers\Backend\Callbacks\AdminCallbacks;
+use Prefix\MyPluginBoilerplate\Common\Functions\Callbacks;
 
 use Prefix\MyPluginBoilerplate\Common\
 {
@@ -73,7 +73,7 @@ class Pages extends Base {
 				'menu_title'     => __( 'My Plugin', 'my-plugin-text-domain' ),
 				'capability'     => 'manage_options',
 				'menu_slug'      => 'my_plugin_boilerplate',
-				'callback'       => [ AdminCallbacks::class, 'adminDashboard' ],
+				'callback'       => [ Callbacks::class, 'adminDashboard' ],
 				'icon_url'       => 'dashicons-admin-settings',
 				'position'       => 110,
 				'top_menu_title' => __( 'Dashboard', 'my-plugin-text-domain' ),
@@ -95,7 +95,7 @@ class Pages extends Base {
 				'menu_title'  => __( 'Sub Page', 'my-plugin-text-domain' ),
 				'capability'  => 'manage_options',
 				'menu_slug'   => 'my_plugin_boilerplate_sub_page',
-				'callback'    => [ AdminCallbacks::class, 'subPage' ],
+				'callback'    => [ Callbacks::class, 'subPage' ],
 			],
 			[
 				'parent_slug' => 'my_plugin_boilerplate',
@@ -103,7 +103,7 @@ class Pages extends Base {
 				'menu_title'  => __( 'Sub Page 2', 'my-plugin-text-domain' ),
 				'capability'  => 'manage_options',
 				'menu_slug'   => 'my_plugin_boilerplate_sub_page_2',
-				'callback'    => [ AdminCallbacks::class, 'subPage2' ],
+				'callback'    => [ Callbacks::class, 'subPage2' ],
 			],
 		];
 	}
@@ -135,7 +135,7 @@ class Pages extends Base {
 			[
 				'id'       => 'my_plugin_boilerplate_admin_index',
 				'title'    => __( 'Settings Manager', 'my-plugin-text-domain' ),
-				'callback' => [ AdminCallbacks::class, 'adminSectionManager' ],
+				'callback' => [ Callbacks::class, 'adminSectionManager' ],
 				'page'     => 'my_plugin_boilerplate',
 			],
 		];

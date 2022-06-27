@@ -58,6 +58,7 @@ final class Plugin {
 			'settings'            => get_option( 'my-plugin-boilerplate-settings' ),
 			'plugin_path'         => \untrailingslashit( \plugin_dir_path( MY_PLUGIN_BOILERPLATE_PLUGIN_ROOT_FILE ) ),
 			'plugin_uri'          => \untrailingslashit( \plugin_dir_url( MY_PLUGIN_BOILERPLATE_PLUGIN_ROOT_FILE ) ),
+			'views_folder'        => 'views',
 			'template_folder'     => 'templates',
 			'ext_template_folder' => 'my-plugin-boilerplate-templates',
 			'assets_folder'       => 'assets',
@@ -117,6 +118,16 @@ final class Plugin {
 	 */
 	public function templatePath() {
 		return $this->data()['plugin_path'] . '/' . $this->data()['template_folder'];
+	}
+
+	/**
+	 * Get the plugin internal views folder name.
+	 *
+	 * @return string
+	 * @since 1.0.0
+	 */
+	public function viewsFolder() {
+		return $this->data()['views_folder'];
 	}
 
 	/**
