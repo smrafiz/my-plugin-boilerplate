@@ -101,7 +101,7 @@ class CustomPostType {
 		// Setting the default labels.
 		$labels = array_merge(
 			[
-				/* translators: %s: post type plural name */
+				/* translators: %s: post type general name */
 				'name'               => sprintf( esc_html_x( '%s', 'post type general name', 'my-plugin-text-domain' ), $plural ),
 				/* translators: %s: post type singular name */
 				'singular_name'      => sprintf( esc_html_x( '%s', 'post type singular name', 'my-plugin-text-domain' ), $name ),

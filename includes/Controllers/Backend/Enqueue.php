@@ -1,6 +1,6 @@
 <?php
 /**
- * Backend Class: AdminEnqueue
+ * Backend Class: Enqueue
  *
  * This class enqueues required styles & scripts in the admin pages.
  *
@@ -15,16 +15,16 @@ namespace Prefix\MyPluginBoilerplate\Controllers\Backend;
 use Prefix\MyPluginBoilerplate\Common\
 {
 	Traits\Singleton,
-	Abstracts\Enqueue
+	Abstracts\Enqueue as EnqueueBase
 };
 
 /**
- * Class: AdminEnqueue
+ * Class: Enqueue
  *
  * @package ThePluginName\App\Backend
  * @since 1.0.0
  */
-class AdminEnqueue extends Enqueue {
+class Enqueue extends EnqueueBase {
 
 	/**
 	 * Singleton Trait.
@@ -59,7 +59,7 @@ class AdminEnqueue extends Enqueue {
 	/**
 	 * Method to accumulate styles list.
 	 *
-	 * @return AdminEnqueue
+	 * @return Enqueue
 	 * @since 1.0.0
 	 */
 	protected function getStyles() {
@@ -83,7 +83,7 @@ class AdminEnqueue extends Enqueue {
 	/**
 	 * Method to accumulate scripts list.
 	 *
-	 * @return AdminEnqueue
+	 * @return Enqueue
 	 * @since 1.0.0
 	 */
 	protected function getScripts() {

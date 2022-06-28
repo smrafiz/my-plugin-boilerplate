@@ -1,6 +1,6 @@
 <?php
 /**
- * Frontend Class: PublicEnqueue
+ * Frontend Class: Enqueue
  *
  * This class enqueues required styles & scripts in the frontend pages.
  *
@@ -15,16 +15,16 @@ namespace Prefix\MyPluginBoilerplate\Controllers\Frontend;
 use Prefix\MyPluginBoilerplate\Common\
 {
 	Traits\Singleton,
-	Abstracts\Enqueue
+	Abstracts\Enqueue as EnqueueBase
 };
 
 /**
- * Class: PublicEnqueue
+ * Class: Enqueue
  *
  * @package ThePluginName\App\Backend
  * @since 1.0.0
  */
-class PublicEnqueue extends Enqueue {
+class Enqueue extends EnqueueBase {
 
 	/**
 	 * Singleton Trait.
@@ -59,7 +59,7 @@ class PublicEnqueue extends Enqueue {
 	/**
 	 * Method to accumulate styles list.
 	 *
-	 * @return PublicEnqueue
+	 * @return Enqueue
 	 * @since 1.0.0
 	 */
 	protected function getStyles() {
@@ -79,7 +79,7 @@ class PublicEnqueue extends Enqueue {
 	/**
 	 * Method to accumulate scripts list.
 	 *
-	 * @return PublicEnqueue
+	 * @return Enqueue
 	 * @since 1.0.0
 	 */
 	protected function getScripts() {
@@ -126,7 +126,7 @@ class PublicEnqueue extends Enqueue {
 			'handle' => 'my-plugin-boilerplate-frontend-script',
 			'object' => 'my_plugin_boilerplate_frontend_object',
 			'data'   => [
-				'ajaxUrl' => esc_url( admin_url( 'admin-ajax.php' ) ),
+				'ajaxUrl'     => esc_url( admin_url( 'admin-ajax.php' ) ),
 				'wpQueryVars' => $wp_query->query_vars,
 			],
 		];

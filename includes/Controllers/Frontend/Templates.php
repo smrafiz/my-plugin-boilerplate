@@ -1,6 +1,6 @@
 <?php
 /**
- * Frontend Class: PublicTemplates
+ * Frontend Class: Templates
  *
  * This class loads the required public templates.
  *
@@ -19,12 +19,12 @@ use Prefix\MyPluginBoilerplate\Common\
 };
 
 /**
- * Class: PublicTemplates
+ * Class: Templates
  *
  * @package ThePluginName\App\Backend
  * @since 1.0.0
  */
-class PublicTemplates extends Base {
+class Templates extends Base {
 
 	/**
 	 * Singleton Trait.

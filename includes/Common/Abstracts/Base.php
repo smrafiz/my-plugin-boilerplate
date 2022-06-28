@@ -25,10 +25,10 @@ abstract class Base {
 	/**
 	 * Data from the plugin config class.
 	 *
-	 * @var array
+	 * @var object
 	 * @since 1.0.0
 	 */
-	protected $plugin = [];
+	protected $plugin;
 
 	/**
 	 * Base Constructor.

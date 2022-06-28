@@ -102,8 +102,8 @@ final class Requirements extends Base {
 				'compare' => $this->plugin->requiredWp(),
 				'title'   => __( 'Invalid WordPress version', 'my-plugin-text-domain' ),
 				'message' => sprintf(
-					/* translators: %1$1s: required wordpress version, %2$2s: current wordpress version */
-					__( 'You must be using WordPress %1$1s or greater. You are currently using WordPress %2$2s.', 'my-plugin-text-domain' ),
+					/* translators: %1$s: required wordpress version, %2$s: current wordpress version */
+					__( 'You must be using WordPress %1$s or greater. You are currently using WordPress %2$s.', 'my-plugin-text-domain' ),
 					$this->plugin->requiredWp(),
 					get_bloginfo( 'version' )
 				),

@@ -67,6 +67,12 @@ class PostMeta extends Base {
 		];
 	}
 
+	/**
+	 * Example Metabox.
+	 *
+	 * @return array
+	 * @since 1.0.0
+	 */
 	private function galleryMeta() {
 		return [
 			'id'       => 'my-plugin-boilerplate-example-text-field',
@@ -203,6 +209,12 @@ class PostMeta extends Base {
 		];
 	}
 
+	/**
+	 * Example Metabox.
+	 *
+	 * @return array
+	 * @since 1.0.0
+	 */
 	private function testimonialMeta() {
 		return [
 			'id'       => 'my-plugin-boilerplate-example-text-field-2',
@@ -229,6 +241,12 @@ class PostMeta extends Base {
 		];
 	}
 
+	/**
+	 * Example Metabox.
+	 *
+	 * @return array
+	 * @since 1.0.0
+	 */
 	private function sides() {
 		return [
 			'id'       => 'my-plugin-boilerplate-example-text-field-3',
