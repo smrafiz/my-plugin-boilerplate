@@ -21,8 +21,8 @@
 		}
 	},
 	"scripts": {
-		"cs": "phpcs --standard=phpcs.xml.dist .",
-		"cbf": "phpcbf --standard=phpcs.xml.dist ."
+		"cs": "phpcs --standard=phpcs.xml .",
+		"cbf": "phpcbf --standard=phpcs.xml ."
 	},
 	"require": {
 		"php": ">=7.1",

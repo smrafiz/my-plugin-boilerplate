@@ -42,7 +42,7 @@
 	</rule>
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax.Found"/>
 
-	<!-- Adds exceptions in files and variables naming conventions. -->
+	<!-- Exclude as plugin adheres to the PSR-4 standard. -->
 	<rule ref="WordPress">
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
@@ -51,13 +51,22 @@
 	</rule>
 
 	<!-- Checks for variable prefix for global variables. -->
-	<!-- <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
 				<element value="my_plugin_boilerplate"/>
+				<element value="MyPluginBoilerplate"/>
+				<element value="Prefix\MyPluginBoilerplate"/>
 			</property>
 		</properties>
-	</rule> -->
+	</rule>
+
+	<!-- Allows hook names in dot notation. -->
+	<rule ref="WordPress.NamingConventions.ValidHookName">
+		<properties>
+			<property name="additionalWordDelimiters" value="."/>
+		</properties>
+	</rule>
 
 	<!-- Defining Cyclomatic Complexity for more modular approach -->
 	<rule ref="Generic.Metrics.CyclomaticComplexity">

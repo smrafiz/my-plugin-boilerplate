@@ -10,6 +10,7 @@
 
 namespace Prefix\MyPluginBoilerplate\Controllers\General;
 
+use Prefix\MyPluginBoilerplate\Controllers\General\Shortcodes\ExampleShortcode;
 use Prefix\MyPluginBoilerplate\Common\
 {
 	Abstracts\Base,

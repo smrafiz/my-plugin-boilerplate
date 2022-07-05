@@ -81,3 +81,7 @@ composer.lock
 yarn.lock
 _ext_dev
 dist
+assets
+languages/my-plugin-boilerplate.pot
+.eslintcache
+.stylelintcache
