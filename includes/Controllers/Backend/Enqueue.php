@@ -71,7 +71,7 @@ class Enqueue extends EnqueueBase {
 
 		$styles[] = [
 			'handle'    => 'my-plugin-boilerplate-admin-styles',
-			'asset_uri' => $this->plugin->assetsUri() . '/css/admin/admin' . $this->plugin->suffix . '.css',
+			'asset_uri' => $this->plugin->assetsUri() . '/css/backend' . $this->plugin->suffix . '.css',
 			'version'   => $this->plugin->version(),
 		];
 
@@ -99,7 +99,7 @@ class Enqueue extends EnqueueBase {
 
 		$scripts[] = [
 			'handle'     => 'my-plugin-boilerplate-admin-script',
-			'asset_uri'  => $this->plugin->assetsUri() . '/js/admin/admin' . $this->plugin->suffix . '.js',
+			'asset_uri'  => $this->plugin->assetsUri() . '/js/backend' . $this->plugin->suffix . '.js',
 			'dependency' => [ 'jquery' ],
 			'in_footer'  => true,
 			'version'    => $this->plugin->version(),

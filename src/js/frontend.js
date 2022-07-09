@@ -8,5 +8,9 @@ import '../scss/frontend.scss';
  */
 
 $(document).ready(function () {
-	console.log('Hello From Frontend');
+	const frontend = {};
+
+	frontend.name = 'Hello from Frontend';
+
+	console.log(frontend);
 });

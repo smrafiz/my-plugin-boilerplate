@@ -1,9 +1,17 @@
 /**
- * Backend CSS
- *
+ * Dashboard specific CSS. These are compiles CSS.
+ * Please don't write custom CSS here.
  */
+@charset "UTF-8";
 
-.admin {
-	font-size: 14px;
-	background-image: url("../images/index.png");
-}
+// Abstracts.
+@import "abstracts/__abstracts-dir";
+
+// Base Styles.
+@import "base/backend/__base-dir";
+
+// Components.
+@import "components/backend/__components-dir";
+
+// Layouts.
+@import "layouts/backend/__layouts-dir";
