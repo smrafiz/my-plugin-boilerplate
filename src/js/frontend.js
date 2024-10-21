@@ -1,16 +1,19 @@
-'use strict';
-
-import '../scss/frontend.scss';
-
 /**
- * Frontend JS.
+ * Backend JS.
  *
  */
 
-$(document).ready(function () {
-	const frontend = {};
+'use strict';
 
-	frontend.name = 'Hello from Frontend';
+import '../scss/frontend.scss';
+import { modules } from './frontend/modules';
 
-	console.log(frontend);
-});
+let frontend = {};
+
+frontend = {
+	init: () => {
+		modules();
+	},
+};
+
+frontend.init();

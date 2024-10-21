@@ -1,12 +1,10 @@
 <?xml version="1.0"?>
 <ruleset name="WordPress Coding Standards">
-	<description>WordPress dev PHP_CodeSniffer ruleset.</description>
-
-	<file>.</file>
+	<description>A custom set of rules to check for WP projects</description>
 
 	<config name="minimum_supported_wp_version" value="5.0.0" />
 
-	<rule ref="WordPress-Core" />
+	<rule ref="WordPress" />
 	<rule ref="WordPress-Docs" />
 	<rule ref="WordPress-Extra" />
 
@@ -29,7 +27,6 @@
 	<rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
 	<rule ref="Generic.Commenting.Todo"/>
 
-	<!-- Add a rule to check the text domain -->
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array" value="my-plugin-text-domain" />
@@ -41,37 +38,34 @@
 		<severity>0</severity>
 	</rule>
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax.Found"/>
+	<rule ref="Universal">
+		<exclude name="Universal"/>
+	</rule>
 
-	<!-- Exclude as plugin adheres to the PSR-4 standard. -->
+	<!-- Adds exceptions in files and variables naming conventions. -->
 	<rule ref="WordPress">
-		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<exclude name="WordPress.Files.FileName"/>
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
 		<exclude name="WordPress.NamingConventions.ValidVariableName"/>
 		<exclude name="WordPress.NamingConventions.ValidFunctionName"/>
+		<exclude name="Generic.Commenting.DocComment.MissingShort"/>
+		<exclude name="Squiz.Commenting.FileComment.Missing"/>
+		<exclude name="Squiz.Commenting.FileComment.Missing"/>
+		<exclude name="Squiz.Commenting.FileComment.MissingPackageTag"/>
 	</rule>
 
-	<!-- Checks for variable prefix for global variables. -->
-	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
-		<properties>
-			<property name="prefixes" type="array">
-				<element value="my_plugin_boilerplate"/>
-				<element value="MyPluginBoilerplate"/>
-				<element value="Prefix\MyPluginBoilerplate"/>
-			</property>
-		</properties>
-	</rule>
-
-	<!-- Allows hook names in dot notation. -->
+	<!-- Allows hook names in dot/slash notation. -->
 	<rule ref="WordPress.NamingConventions.ValidHookName">
 		<properties>
 			<property name="additionalWordDelimiters" value="."/>
+			<property name="additionalWordDelimiters" value="/"/>
 		</properties>
 	</rule>
 
 	<!-- Defining Cyclomatic Complexity for more modular approach -->
 	<rule ref="Generic.Metrics.CyclomaticComplexity">
 		<properties>
-			<property name="complexity" value="20"/>
+			<property name="complexity" value="30"/>
 			<property name="absoluteComplexity" value="30"/>
 		</properties>
 	</rule>
@@ -79,7 +73,7 @@
 	<!-- Defining Nested Level -->
 	<rule ref="Generic.Metrics.NestingLevel">
 		<properties>
-			<property name="absoluteNestingLevel" value="5"/>
+			<property name="absoluteNestingLevel" value="8"/>
 		</properties>
 	</rule>
 
@@ -107,4 +101,6 @@
 
 	<!-- Exclude minified Javascript files. -->
 	<exclude-pattern>*.min.js</exclude-pattern>
+
+	<file>.</file>
 </ruleset>

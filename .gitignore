@@ -27,7 +27,6 @@ node_modules/
 ######################
 **.DS_Store*
 ehthumbs.db
-Icon?
 Thumbs.db
 ._*
 .cache
@@ -81,7 +80,13 @@ composer.lock
 yarn.lock
 _ext_dev
 dist
-assets
-languages/my-plugin-boilerplate.pot
-.eslintcache
-.stylelintcache
+.idea
+assets/css
+assets/js
+assets/modules
+tmp
+_ext_**
+.fleet
+*.txt
+!todo.txt
+languages/shopbuilder.pot

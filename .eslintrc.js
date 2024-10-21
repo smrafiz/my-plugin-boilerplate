@@ -20,7 +20,14 @@ module.exports = {
 		'eslint:recommended',
 		'plugin:@wordpress/eslint-plugin/recommended',
 	],
-	rules: {},
+	rules: {
+		'prettier/prettier': [
+			'error',
+			{
+				endOfLine: 'auto',
+			},
+		],
+	},
 	globals: {
 		wp: true,
 		jQuery: true,

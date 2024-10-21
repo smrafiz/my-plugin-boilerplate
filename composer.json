@@ -21,11 +21,11 @@
 		}
 	},
 	"scripts": {
-		"cs": "phpcs --standard=phpcs.xml .",
-		"cbf": "phpcbf --standard=phpcs.xml ."
+		"cs": "phpcs --standard=phpcs.xml --report-full=error-report.txt --report-summary=error-summary.txt .",
+		"cbf": "phpcbf --standard=phpcs.xml .",
+		"phpcs": "phpcs --standard=phpcs.xml"
 	},
 	"require": {
-		"php": ">=7.1",
-		"htmlburger/carbon-fields": "^v3.3.4"
+		"php": ">=7.4"
 	}
 }

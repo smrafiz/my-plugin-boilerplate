@@ -33,6 +33,9 @@
 
 declare( strict_types = 1 );
 
+use Prefix\MyPluginBoilerplate\Bootstrap;
+use Prefix\MyPluginBoilerplate\Common\Functions\Functions;
+
 // If this file is called directly, abort!!!
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -75,7 +78,7 @@ if ( ! class_exists( 'Prefix\MyPluginBoilerplate\\Bootstrap' ) ) {
 add_action(
 	'plugins_loaded',
 	static function () use ( $my_plugin_boilerplate_autoloader ) {
-		$app = \Prefix\MyPluginBoilerplate\Bootstrap::instance();
+		$app = Bootstrap::instance();
 		$app->registerServices( $my_plugin_boilerplate_autoloader );
 	}
 );
@@ -83,9 +86,9 @@ add_action(
 /**
  * Create a main function for external uses.
  *
- * @return \Prefix\MyPluginBoilerplate\Common\Functions\Functions
+ * @return Functions
  * @since 1.0.0
  */
 function my_plugin_boilerplate() {
-	return new \Prefix\MyPluginBoilerplate\Common\Functions\Functions();
+	return new Functions();
 }
